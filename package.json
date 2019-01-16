@@ -1,0 +1,14 @@
+{
+  "name": "wistia",
+  "version": "1.0.0",
+  "description": "A simple program to get Wistia data and convert to CSV",
+  "main": "wistia.js",
+  "scripts": {
+    "start": "node wistia.js"
+  },
+  "author": "Hari Lamichhane <onwithhari@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "node-fetch": "^2.3.0"
+  }
+}
