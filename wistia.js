@@ -3,6 +3,11 @@ const fs = require('fs');
 
 const API_KEY = 'ca53f7568dff9c273f68bf4f70d0eee8a3a3be181992100188ad2d3288b07a79';
 const API_URL = 'https://api.wistia.com/v1/medias.json?api_password=';
+
+const urls = `
+if you want some specific urls only, paste them here
+`;
+
 const createCSV = medias => {
   const result = [];
   for (const media of medias) {
@@ -26,11 +31,19 @@ const saveCSV = data => fs.writeFile('./videos-' + Date.now() + '.csv', data, er
   console.log('Saved!');
 });
 
+const getIds = () => {
+  return urls.
+    split(/\s/gi)
+    .filter(url => url.trim().length && url.includes('/medias/'))
+    .map(url => url.split('/').pop());
+}
+
 const getVideos = async () => {
   try {
     const response = await fetch(API_URL + API_KEY);
     const medias = await response.json();
-    const csv = createCSV(medias);
+    const ids = getIds();
+    const csv = createCSV(ids.length ? medias.filter(media => ids.includes(media.hashed_id)) : medias);
     saveCSV(csv);
   } catch (exp) {
     console.log('Error occured: ' + exp.message);
